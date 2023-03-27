@@ -12,7 +12,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.mardillu:multiscanner:15beeaeb'
+    //replace XX with the latest version
+    implementation 'com.github.mardillu:multiscanner:XX'
 }
 ~~~
 
