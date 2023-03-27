@@ -1,5 +1,5 @@
 # OpenAPI Client for Android
-A light weight OpenAI's API client for Android. This tool is specifically designed for Android developers to interact with OpenAI's API in a lightweight and efficient manner. With this client, Android developers will be able to access OpenAI's services seamlessly, without having to worry about heavy resource consumption or slow performance. This tool promises to be an invaluable asset for Android developers and users who require quick and easy access to OpenAI's API.\
+A light weight OpenAI's API client for Android. This tool is specifically designed for Android developers to interact with OpenAI's API in a lightweight and efficient manner. With this client, Android developers will be able to access OpenAI's services seamlessly, without having to worry about heavy resource consumption or slow performance. This tool promises to be an invaluable asset for Android developers and users who require quick and easy access to OpenAI's API.
 
 [![Jitpack](https://jitpack.io/v/mardillu/OpenAI-Client-Android.svg)](https://jitpack.io/#mardillu/OpenAI-Client-Android)
 [![Build & Unit Test](https://github.com/mardillu/OpenAI-Client-Android/actions/workflows/build.yml/badge.svg)](https://github.com/mardillu/OpenAI-Client-Android/actions/workflows/build.yml)
@@ -10,17 +10,20 @@ A light weight OpenAI's API client for Android. This tool is specifically design
 OpenAPI Client for Android is an open-sourced software licensed under the  [MIT license](https://github.com/mardillu/OpenAI-Client-Android/blob/master/LICENSE).  **This is an unofficial library, it is not affiliated with nor endorsed by OpenAI**. Contributions are welcome.
 
 ## Setup
-1. Add it in your root `build.gradle` at the end of repositories:
+1. Add this to your Project level `build.gradle` at the end of repositories:
 ~~~groovy
-repositories {
-    maven { url 'https://jitpack.io' }
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 }
 ~~~
-2. Add the dependency to your module `build.gradle`:
+2. Add the dependency to your module level `build.gradle`:
 ~~~groovy
 dependencies {
     //replace XX with the latest version
-    implementation 'com.github.mardillu:multiscanner:XX'
+    implementation 'com.github.mardillu:OpenAI-Client-Android:XX'
 }
 ~~~
 
