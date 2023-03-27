@@ -21,11 +21,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            resValue ("string", "OPEN_AI_API_KEY", "${project.OPEN_AI_API_KEY}")
+            //resValue ("string", "OPEN_AI_API_KEY", "${project.OPEN_AI_API_KEY}")
         }
 
         debug {
-            resValue ("string", "OPEN_AI_API_KEY", "${project.OPEN_AI_API_KEY}")
+            //resValue ("string", "OPEN_AI_API_KEY", "${project.OPEN_AI_API_KEY}")
         }
     }
     compileOptions {
