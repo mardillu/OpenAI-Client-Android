@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        chatGptService.getEditCompletion(input = "What day of the wek is it?", instruction = "Fix the spelling mistakes") { result, error ->
+        chatGptService.getEditCompletionAlt(input = "What day of the wek is it?", instruction = "Fix the spelling mistakes") { result, error ->
             if (error != null) {
                 // Handle error
             } else if (result != null) {

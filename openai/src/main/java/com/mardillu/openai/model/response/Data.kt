@@ -1,7 +1,7 @@
 package com.mardillu.openai.model.response
 
 data class Data(
-    var `object`: String,
-    var embedding: List<Double>,
-    var index: Int
+    val `object`: String,
+    val embedding: List<Double>,
+    val index: Int
 )

@@ -1,8 +1,8 @@
 package com.mardillu.openai.model.response
 
 data class CreateEmbeddingResponse(
-    var `object`: String,
-    var `data`: List<Data>,
-    var model: String,
-    var usage: Usage
+    val `object`: String,
+    val `data`: List<Data>,
+    val model: String,
+    val usage: Usage
 )

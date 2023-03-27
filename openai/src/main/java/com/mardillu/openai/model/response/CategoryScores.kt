@@ -3,15 +3,15 @@ package com.mardillu.openai.model.response
 import com.google.gson.annotations.SerializedName
 
 data class CategoryScores(
-    var hate: Double,
+    val hate: Double,
     @SerializedName("hate/threatening")
-    var hateThreatening: Double,
+    val hateThreatening: Double,
     @SerializedName("self-harm")
-    var selfHarm: Double,
-    var sexual: Double,
+    val selfHarm: Double,
+    val sexual: Double,
     @SerializedName("sexual/minors")
-    var sexualMinors: Double,
-    var violence: Double,
+    val sexualMinors: Double,
+    val violence: Double,
     @SerializedName("violence/graphic")
-    var violenceGraphic: Double
+    val violenceGraphic: Double
 )

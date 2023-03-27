@@ -157,7 +157,7 @@ class OpenApiClient {
      *
      * @param input String The input text to use as a starting point for the edit.
      * @param instruction String The instruction that tells the model how to edit the prompt.
-     * @param model String String ID of the model to use. See the model endpoint compatibility table for details on which models work with the Chat API.
+     * @param model ID of the model to use. You can use the text-davinci-edit-001 or code-davinci-edit-001 model with this endpoint.
      * @param completionHandler Function2<EditCompletionResponse?, Throwable?, Unit> callback handler
      * @see <a href="https://platform.openai.com/docs/api-reference/edits">OpenAI API Reference for Edits</a>
      * @see {@link ChatGptService#getModels()}
@@ -189,6 +189,73 @@ class OpenApiClient {
                 completionHandler(null, t)
             }
         })
+    }
+
+    private fun getEditCompletionAltInternal(
+        vararg prompt: String,
+        model: String = "text-davinci-003",
+        maxTokens: Int = 16,
+        temperature: Double = 1.0,
+        top_p: Double = 1.0,
+        stream: Boolean = false,
+        logprobs: Int? = null,
+        stop: String? = null,
+        completionHandler: (TextCompletionResponse?, Throwable?) -> Unit
+    ) {
+        val requestBody = TextCompletionRequest(
+            prompt,
+            maxTokens,
+            temperature,
+            model,
+            top_p,
+            stream,
+            logprobs,
+            stop
+        )
+        val call = apiService.getTextCompletion(requestBody)
+
+        call.enqueue(object : Callback<TextCompletionResponse> {
+            override fun onResponse(
+                call: Call<TextCompletionResponse>,
+                response: Response<TextCompletionResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    completionHandler(result, null)
+                } else {
+                    val error = HttpException(response)
+                    completionHandler(null, error)
+                }
+            }
+
+            override fun onFailure(call: Call<TextCompletionResponse>, t: Throwable) {
+                completionHandler(null, t)
+            }
+        })
+    }
+
+    /**
+     * Given a prompt and an instruction, the model will return an edited version of the prompt.
+     * <p> This implementation uses the completion api as a workaround to an age-long issue with the
+     * actual Edit api
+     *
+     * @param input String The input text to use as a starting point for the edit.
+     * @param instruction String The instruction that tells the model how to edit the prompt.
+     * @param completionHandler Function2<EditCompletionResponse?, Throwable?, Unit> callback handler
+     * @see <a href="https://platform.openai.com/docs/api-reference/edits">OpenAI API Reference for Edits</a>
+     * @see {@link ChatGptService#getModels()}
+     */
+    fun getEditCompletionAlt(input: String,
+                             instruction: String,
+                             completionHandler: (TextCompletionResponse?, Throwable?) -> Unit
+    ){
+        getEditCompletionAltInternal("$input. $instruction",) { response, t ->
+            if (response == null){
+                completionHandler(null, t)
+            } else {
+                completionHandler(response, null)
+            }
+        }
     }
 
     /**
@@ -279,15 +346,17 @@ class OpenApiClient {
      * Given a input text, outputs if the model classifies it as violating OpenAI's content policy.
      *
      * @param input String The input text to classify
+     * @param model Two content moderations models are available: text-moderation-stable and text-moderation-latest.
      * @param completionHandler Function2<ModerationResponse?, Throwable?, Unit> callback handler
      * @see <a href="https://platform.openai.com/docs/api-reference/moderations">OpenAI API Reference for Moderation</a>
      * @see {@link ChatGptService#getModels()}
      */
     fun getModeration(
         input: String,
+        model: String = "text-moderation-latest",
         completionHandler: (ModerationResponse?, Throwable?) -> Unit
     ) {
-        val requestBody = ModerationRequest(input)
+        val requestBody = ModerationRequest(input, model)
         val call = apiService.getModeration(requestBody)
 
         call.enqueue(object : Callback<ModerationResponse> {

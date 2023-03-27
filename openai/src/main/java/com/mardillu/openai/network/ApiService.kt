@@ -29,6 +29,6 @@ interface ChatGptApiService {
         @POST("moderations")
         fun getModeration(@Body request: ModerationRequest): Call<ModerationResponse>
 
-        @POST("models")
+        @GET("models")
         fun getModels(): Call<GetModelsResponse>
 }

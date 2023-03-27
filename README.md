@@ -2,17 +2,17 @@
 A light weight OpenAI's API client for Android. This tool is specifically designed for Android developers to interact with OpenAI's API in a lightweight and efficient manner. With this client, Android developers will be able to access OpenAI's services seamlessly, without having to worry about heavy resource consumption or slow performance. This tool promises to be an invaluable asset for Android developers and users who require quick and easy access to OpenAI's API.
 
 ## Disclaimer
-OpenAPI Client for Android is an open-sourced software licensed under the  [MIT license](LICENSE.md).  **This is an unofficial library, it is not affiliated with nor endorsed by OpenAI**. Contributions are welcome.
+OpenAPI Client for Android is an open-sourced software licensed under the  [MIT license](https://github.com/mardillu/OpenAI-Client-Android/blob/master/LICENSE).  **This is an unofficial library, it is not affiliated with nor endorsed by OpenAI**. Contributions are welcome.
 
 ## Setup
 Install OpenAI API Android client by adding the following dependency to your  `gradle.build`  file:
 ~~~groovy
 repositories {
-	maven { url 'https://jitpack.io' }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-	implementation 'com.github.mardillu:multiscanner:15beeaeb'
+    implementation 'com.github.mardillu:multiscanner:15beeaeb'
 }
 ~~~
 
@@ -28,11 +28,11 @@ val client = OpenApiClient()
 3. Make a request
 ```kotlin
 client.getTextCompletion("Hello chat gpt! what is the meaning of life?") { result, error ->
-	if (error != null) {
-		// Handle error
-	} else if (result != null) {
-		Log.d("TAG", result.choices[0].text)
-	}
+    if (error != null) {
+        // Handle error
+    } else if (result != null) {
+        Log.d("TAG", result.choices[0].text)
+    }
 }
 ```
 ## Supported APIs

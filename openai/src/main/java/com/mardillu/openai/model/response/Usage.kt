@@ -5,7 +5,7 @@ package com.mardillu.openai.model.response
  * @author mardillu
  */
 data class Usage(
-    var prompt_tokens: Int,
-    var completion_tokens: Int?,
-    var total_tokens: Int
+    val prompt_tokens: Int,
+    val completion_tokens: Int?,
+    val total_tokens: Int
 )

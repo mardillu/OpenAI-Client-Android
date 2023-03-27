@@ -5,10 +5,10 @@ package com.mardillu.openai.model.response
  * @author mardillu
  */
 data class TextCompletionResponse(
-    var id: String,
-    var `object`: String,
-    var created: Int,
-    var model: String,
-    var choices: List<Choice>,
-    var usage: Usage
+    val id: String,
+    val `object`: String,
+    val created: Int,
+    val model: String,
+    val choices: List<Choice>,
+    val usage: Usage
 )
