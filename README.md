@@ -1,16 +1,21 @@
 # OpenAPI Client for Android
 A light weight OpenAI's API client for Android. This tool is specifically designed for Android developers to interact with OpenAI's API in a lightweight and efficient manner. With this client, Android developers will be able to access OpenAI's services seamlessly, without having to worry about heavy resource consumption or slow performance. This tool promises to be an invaluable asset for Android developers and users who require quick and easy access to OpenAI's API.
+[![Jitpack](https://jitpack.io/v/mardillu/OpenAI-Client-Android.svg)](https://jitpack.io/#mardillu/OpenAI-Client-Android)
+[![License](https://img.shields.io/github/license/Aallam/openai-kotlin?color=yellow)](LICENSE.md)
+
 
 ## Disclaimer
 OpenAPI Client for Android is an open-sourced software licensed under the  [MIT license](https://github.com/mardillu/OpenAI-Client-Android/blob/master/LICENSE).  **This is an unofficial library, it is not affiliated with nor endorsed by OpenAI**. Contributions are welcome.
 
 ## Setup
-Install OpenAI API Android client by adding the following dependency to your  `gradle.build`  file:
+1. Add it in your root `build.gradle` at the end of repositories:
 ~~~groovy
 repositories {
     maven { url 'https://jitpack.io' }
 }
-
+~~~
+2. Add the dependency to your module `build.gradle`:
+~~~groovy
 dependencies {
     //replace XX with the latest version
     implementation 'com.github.mardillu:multiscanner:XX'
@@ -20,7 +25,7 @@ dependencies {
 ## Getting started
 1. Initialize the client by calling the following function. You only need to do this once, ideally, in your Application class using environment variables for the API_KEY.
 ~~~kotlin
-OPenAiInitializer.initialize("API_KEY")
+OpenAiInitializer.initialize("API_KEY")
 ~~~
 2. Create an instance of `OpenAiClient`
 ```kotlin
