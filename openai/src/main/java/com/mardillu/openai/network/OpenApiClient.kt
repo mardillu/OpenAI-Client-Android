@@ -410,6 +410,184 @@ class OpenApiClient {
             }
         })
     }
+
+    /**
+     * Creates an edited or extended image given an original image and a prompt.
+     *
+     * @param image The image to edit. Must be a valid PNG file, less than 4MB, and square. If mask is not provided, image must have transparency, which will be used as the mask.
+     * @param prompt A text description of the desired image(s). The maximum length is 1000 characters.
+     * @param mask An additional image whose fully transparent areas (e.g. where alpha is zero) indicate where image should be edited. Must be a valid PNG file, less than 4MB, and have the same dimensions as image.
+     * @param n The number of images to generate. Must be between 1 and 10.
+     * @param size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024.
+     * @param completionHandler Function2<GetModelsResponse?, Throwable?, Unit> callback handler
+     * @see <a href="https://platform.openai.com/docs/api-reference/images/create-edit">OpenAI API Reference for Image Edit</a>
+     * @see {@link ChatGptService#getModels()}
+     */
+    fun createImageEdit(
+            image: File,
+            prompt: String,
+            mask: File? = null,
+            n: Int = 1,
+            size: String = "1024x1024",
+            completionHandler: (CreateImageResponse?, Throwable?) -> Unit
+    ) {
+        val requestFile = image.asRequestBody("image/*".toMediaTypeOrNull())
+        val _size = size.toRequestBody("text/plain".toMediaTypeOrNull())
+        val _n = "$n".toRequestBody("text/plain".toMediaTypeOrNull())
+        val _prompt = prompt.toRequestBody("text/plain".toMediaTypeOrNull())
+        val imagePart = MultipartBody.Part.createFormData("image", image.name, requestFile)
+
+        val call = if (mask != null) {
+            val maskFile = mask.asRequestBody("image/*".toMediaTypeOrNull())
+            val maskPart = MultipartBody.Part.createFormData("mask", mask.name, maskFile)
+
+            apiService.createImageEdit(imagePart, maskPart, _prompt, _n, _size)
+        } else {
+            apiService.createImageEdit(imagePart, _prompt, _n, _size)
+        }
+
+        call.enqueue(object : Callback<CreateImageResponse> {
+            override fun onResponse(
+                    call: Call<CreateImageResponse>,
+                    response: Response<CreateImageResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    completionHandler(result, null)
+                } else {
+                    val err = response.errorBody()?.string()
+                    val error = HttpException(response)
+                    completionHandler(null, error)
+                }
+            }
+
+            override fun onFailure(call: Call<CreateImageResponse>, t: Throwable) {
+                completionHandler(null, t)
+            }
+        })
+    }
+
+    /**
+     * Creates a variation of a given image.
+     *
+     * @param image The image to use as the basis for the variation(s). Must be a valid PNG file, less than 4MB, and square.
+     * @param n The number of images to generate. Must be between 1 and 10.
+     * @param size The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024.
+     * @param completionHandler Function2<GetModelsResponse?, Throwable?, Unit> callback handler
+     * @see <a href="https://platform.openai.com/docs/api-reference/images/create-variation">OpenAI API Reference for Image Variations</a>
+     */
+    fun createImageVariation(
+            image: File,
+            n: Int = 1,
+            size: String = "1024x1024",
+            completionHandler: (CreateImageResponse?, Throwable?) -> Unit
+    ) {
+        val requestFile = image.asRequestBody("image/*".toMediaTypeOrNull())
+        val _size = size.toRequestBody("text/plain".toMediaTypeOrNull())
+        val _n = "$n".toRequestBody("text/plain".toMediaTypeOrNull())
+        val imagePart = MultipartBody.Part.createFormData("image", image.name, requestFile)
+
+        val call = apiService.createImageVariation(imagePart, _n, _size)
+
+        call.enqueue(object : Callback<CreateImageResponse> {
+            override fun onResponse(
+                    call: Call<CreateImageResponse>,
+                    response: Response<CreateImageResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    completionHandler(result, null)
+                } else {
+                    val error = HttpException(response)
+                    completionHandler(null, error)
+                }
+            }
+
+            override fun onFailure(call: Call<CreateImageResponse>, t: Throwable) {
+                completionHandler(null, t)
+            }
+        })
+    }
+
+    /**
+     * Transcribes audio into the input language.
+     *
+     * @param file The audio file to transcribe, in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm.
+     * @param model ID of the model to use. Only whisper-1 is currently available.
+     * @param completionHandler Function2<GetModelsResponse?, Throwable?, Unit> callback handler
+     * @see <a href="https://platform.openai.com/docs/api-reference/images/create-variation">OpenAI API Reference for Image Variations</a>
+     */
+    fun createTranscription(
+            file: File,
+            model: String = "whisper-1",
+            completionHandler: (SimpleTextResponse?, Throwable?) -> Unit
+    ) {
+        val requestFile = file.asRequestBody("audio/*".toMediaTypeOrNull())
+        val _model = model.toRequestBody("text/plain".toMediaTypeOrNull())
+        val audioPart = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+        val call = apiService.createTranscription(audioPart, _model)
+
+        call.enqueue(object : Callback<SimpleTextResponse> {
+            override fun onResponse(
+                    call: Call<SimpleTextResponse>,
+                    response: Response<SimpleTextResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    completionHandler(result, null)
+                } else {
+                    val err = response.errorBody()?.string()
+                    val error = HttpException(response)
+                    completionHandler(null, error)
+                }
+            }
+
+            override fun onFailure(call: Call<SimpleTextResponse>, t: Throwable) {
+                completionHandler(null, t)
+            }
+        })
+    }
+
+    /**
+     * Transcribes audio into the input language.
+     *
+     * @param file The audio file to transcribe, in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm.
+     * @param model ID of the model to use. Only whisper-1 is currently available.
+     * @param completionHandler Function2<GetModelsResponse?, Throwable?, Unit> callback handler
+     * @see <a href="https://platform.openai.com/docs/api-reference/images/create-variation">OpenAI API Reference for Image Variations</a>
+     */
+    fun createTranslation(
+            file: File,
+            model: String = "whisper-1",
+            completionHandler: (SimpleTextResponse?, Throwable?) -> Unit
+    ) {
+        val requestFile = file.asRequestBody("audio/*".toMediaTypeOrNull())
+        val _model = model.toRequestBody("text/plain".toMediaTypeOrNull())
+        val audioPart = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+        val call = apiService.createTranslation(audioPart, _model)
+
+        call.enqueue(object : Callback<SimpleTextResponse> {
+            override fun onResponse(
+                    call: Call<SimpleTextResponse>,
+                    response: Response<SimpleTextResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    completionHandler(result, null)
+                } else {
+                    val err = response.errorBody()?.string()
+                    val error = HttpException(response)
+                    completionHandler(null, error)
+                }
+            }
+
+            override fun onFailure(call: Call<SimpleTextResponse>, t: Throwable) {
+                completionHandler(null, t)
+            }
+        })
+    }
 }
 
 
