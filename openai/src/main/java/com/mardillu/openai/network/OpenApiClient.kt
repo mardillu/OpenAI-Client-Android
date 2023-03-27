@@ -529,7 +529,7 @@ class OpenApiClient {
             model: String = "whisper-1",
             completionHandler: (SimpleTextResponse?, Throwable?) -> Unit
     ) {
-        val requestFile = file.asRequestBody("audio/*".toMediaTypeOrNull())
+        val requestFile = file.asRequestBody("audio/m4a".toMediaTypeOrNull())
         val _model = model.toRequestBody("text/plain".toMediaTypeOrNull())
         val audioPart = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
@@ -569,7 +569,7 @@ class OpenApiClient {
             model: String = "whisper-1",
             completionHandler: (SimpleTextResponse?, Throwable?) -> Unit
     ) {
-        val requestFile = file.asRequestBody("audio/*".toMediaTypeOrNull())
+        val requestFile = file.asRequestBody("audio/m4a".toMediaTypeOrNull())
         val _model = model.toRequestBody("text/plain".toMediaTypeOrNull())
         val audioPart = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
