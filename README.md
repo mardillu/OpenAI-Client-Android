@@ -50,16 +50,19 @@ client.getTextCompletion("Hello chat gpt! what is the meaning of life?") { resul
 - [x] Completions
 - [x] Chat
 - [x] Edits
-- [x] Image Generate
+- [x] Images
+  - Create
+  - Edit
+  - Variations
 - [x] Embeddings
 - [x] Moderations
 - [x] Models
+- [x] Audio
+  - Transcribe
+  - Translate
 
 ## Upcoming APIs
-- [ ] Audio
 - [ ] Fine-tunes
-- [ ] Image Edit
-- [ ] Image variatation
 - [ ] Files
 
 ## License
