@@ -3,6 +3,9 @@ package com.mardillu.openai.network
 import com.mardillu.openai.model.*
 import com.mardillu.openai.model.requests.*
 import com.mardillu.openai.model.response.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -31,4 +34,45 @@ interface ChatGptApiService {
 
         @GET("models")
         fun getModels(): Call<GetModelsResponse>
+
+        @Multipart
+        @POST("images/edits")
+        fun createImageEdit(
+                @Part image: MultipartBody.Part,
+                @Part mask: MultipartBody.Part,
+                @Part("prompt") prompt: RequestBody,
+                @Part("n") n: RequestBody,
+                @Part("size") size: RequestBody
+        ): Call<CreateImageResponse>
+
+        @Multipart
+        @POST("images/edits")
+        fun createImageEdit(
+                @Part image: MultipartBody.Part,
+                @Part("prompt") prompt: RequestBody,
+                @Part("n") n: RequestBody,
+                @Part("size") size: RequestBody
+        ): Call<CreateImageResponse>
+
+        @Multipart
+        @POST("images/variations")
+        fun createImageVariation(
+                @Part image: MultipartBody.Part,
+                @Part("n") n: RequestBody,
+                @Part("size") size: RequestBody
+        ): Call<CreateImageResponse>
+
+        @Multipart
+        @POST("audio/transcriptions")
+        fun createTranscription(
+                @Part file: MultipartBody.Part,
+                @Part("model") size: RequestBody
+        ): Call<SimpleTextResponse>
+
+        @Multipart
+        @POST("audio/translations")
+        fun createTranslation(
+                @Part file: MultipartBody.Part,
+                @Part("model") size: RequestBody
+        ): Call<SimpleTextResponse>
 }

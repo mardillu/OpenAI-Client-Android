@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mardillu.openai.model.Message
 import com.mardillu.openai.network.OpenApiClient
 import com.mardillu.openai.test.databinding.ActivityMainBinding
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
