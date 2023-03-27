@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mardillu.openai.model.Message
 import com.mardillu.openai.network.OpenApiClient
 import com.mardillu.openai.test.databinding.ActivityMainBinding
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -62,5 +63,48 @@ class MainActivity : AppCompatActivity() {
                 binding.result6.text = result.results[0].categories.hate.toString()
             }
         }
+
+        chatGptService.createImageEdit(imageFromAssets("img.png"), "A cute cat sitting on a white table") { result, error ->
+            if (error != null) {
+                // Handle error
+            } else if (result != null) {
+                binding.result7.text = result.data[0].url
+            }
+        }
+
+        chatGptService.createImageVariation(imageFromAssets("img.png")) { result, error ->
+            if (error != null) {
+                // Handle error
+            } else if (result != null) {
+                binding.result8.text = result.data[0].url
+            }
+        }
+
+        chatGptService.createTranscription(imageFromAssets("audio.m4a")) { result, error ->
+            if (error != null) {
+                // Handle error
+            } else if (result != null) {
+                binding.result9.text = result.text
+            }
+        }
+
+        chatGptService.createTranslation(imageFromAssets("audio.m4a")) { result, error ->
+            if (error != null) {
+                // Handle error
+            } else if (result != null) {
+                binding.result10.text = result.text
+            }
+        }
+    }
+
+    private fun imageFromAssets(name: String): File {
+        val inputStream = applicationContext.assets.open(name)
+        val file = File.createTempFile("","")
+        file.outputStream().use { outputStream ->
+            inputStream.copyTo(outputStream)
+        }
+        inputStream.close()
+
+        return file
     }
 }
