@@ -462,7 +462,6 @@ class OpenApiClient {
                     val result = response.body()
                     completionHandler(result, null)
                 } else {
-                    val err = response.errorBody()?.string()
                     val error = HttpException(response)
                     completionHandler(null, error)
                 }
@@ -544,7 +543,6 @@ class OpenApiClient {
                     val result = response.body()
                     completionHandler(result, null)
                 } else {
-                    val err = response.errorBody()?.string()
                     val error = HttpException(response)
                     completionHandler(null, error)
                 }
@@ -584,7 +582,6 @@ class OpenApiClient {
                     val result = response.body()
                     completionHandler(result, null)
                 } else {
-                    val err = response.errorBody()?.string()
                     val error = HttpException(response)
                     completionHandler(null, error)
                 }
