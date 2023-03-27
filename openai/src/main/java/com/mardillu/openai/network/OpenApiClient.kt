@@ -2,19 +2,18 @@ package com.mardillu.openai.network
 
 import com.mardillu.openai.BuildConfig
 import com.mardillu.openai.OpenAiInitializer
-import com.mardillu.openai.model.*
+import com.mardillu.openai.model.Message
+import com.mardillu.openai.model.TextCompletionRequest
 import com.mardillu.openai.model.requests.*
 import com.mardillu.openai.model.response.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Part
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -256,7 +255,7 @@ class OpenApiClient {
                              instruction: String,
                              completionHandler: (TextCompletionResponse?, Throwable?) -> Unit
     ) {
-        getEditCompletionAltInternal("$input. $instruction", ) { response, t ->
+        getEditCompletionAltInternal("$input. $instruction" ) { response, t ->
             if (response == null) {
                 completionHandler(null, t)
             } else {
@@ -521,7 +520,7 @@ class OpenApiClient {
      * @param file The audio file to transcribe, in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm.
      * @param model ID of the model to use. Only whisper-1 is currently available.
      * @param completionHandler Function2<GetModelsResponse?, Throwable?, Unit> callback handler
-     * @see <a href="https://platform.openai.com/docs/api-reference/images/create-variation">OpenAI API Reference for Image Variations</a>
+     * @see <a href="https://platform.openai.com/docs/api-reference/audio/create">OpenAI API Reference for Audio transcription</a>
      */
     fun createTranscription(
             file: File,
@@ -555,12 +554,12 @@ class OpenApiClient {
     }
 
     /**
-     * Transcribes audio into the input language.
+     * Translates audio into English.
      *
      * @param file The audio file to transcribe, in one of these formats: mp3, mp4, mpeg, mpga, m4a, wav, or webm.
      * @param model ID of the model to use. Only whisper-1 is currently available.
      * @param completionHandler Function2<GetModelsResponse?, Throwable?, Unit> callback handler
-     * @see <a href="https://platform.openai.com/docs/api-reference/images/create-variation">OpenAI API Reference for Image Variations</a>
+     * @see <a href="https://platform.openai.com/docs/api-reference/audio/create">OpenAI API Reference for Audio translation</a>
      */
     fun createTranslation(
             file: File,

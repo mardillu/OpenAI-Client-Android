@@ -99,7 +99,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun imageFromAssets(name: String): File {
         val inputStream = applicationContext.assets.open(name)
-        val file = File.createTempFile("pre","suf")
+        val suf = if (name.contains("m4a")) "suf.m4a" else "suf"
+        val file = File.createTempFile("pre",suf)
         file.outputStream().use { outputStream ->
             inputStream.copyTo(outputStream)
         }
