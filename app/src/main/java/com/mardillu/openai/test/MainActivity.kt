@@ -1,8 +1,11 @@
 package com.mardillu.openai.test
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mardillu.openai.model.Message
+import com.mardillu.openai.network.LoggingApiService
+import com.mardillu.openai.network.LoggingClient
 import com.mardillu.openai.network.OpenApiClient
 import com.mardillu.openai.test.databinding.ActivityMainBinding
 import java.io.File
@@ -15,6 +18,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val chatGptService = OpenApiClient()
+        val loggingApiService = LoggingClient()
+
+        loggingApiService.logRequestTime(
+            "user/login",
+            200,
+            500,
+            300,
+            200,
+        ){ result, error ->
+            if (error != null){
+                Log.d("TAG", "onCreate: =======> FAILED <============")
+                error.printStackTrace()
+            } else {
+                Log.d("TAG", "onCreate: =======> SUCCESS <============")
+            }
+        }
 
         chatGptService.getTextCompletion("Hello chat gpt! what is the meaning of life?") { result, error ->
             if (error != null) {
@@ -95,6 +114,8 @@ class MainActivity : AppCompatActivity() {
                 binding.result10.text = result.text
             }
         }
+
+
     }
 
     private fun imageFromAssets(name: String): File {
