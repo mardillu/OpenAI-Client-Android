@@ -6,4 +6,5 @@ data class LogApiRequest(
     val response_time: Long,
     val duration: Long,
     val response_code: Int,
+    val method: String,
 )
