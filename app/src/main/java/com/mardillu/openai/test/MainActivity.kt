@@ -20,20 +20,20 @@ class MainActivity : AppCompatActivity() {
         val chatGptService = OpenApiClient()
         val loggingApiService = LoggingClient()
 
-        loggingApiService.logRequestTime(
-            "user/login",
-            200,
-            500,
-            300,
-            200,
-        ){ result, error ->
-            if (error != null){
-                Log.d("TAG", "onCreate: =======> FAILED <============")
-                error.printStackTrace()
-            } else {
-                Log.d("TAG", "onCreate: =======> SUCCESS <============")
-            }
-        }
+//        loggingApiService.logRequestTime(
+//            "test/test",
+//            200,
+//            500,
+//            300,
+//            200,
+//        ){ result, error ->
+//            if (error != null){
+//                Log.d("TAG", "onCreate: =======> FAILED <============")
+//                error.printStackTrace()
+//            } else {
+//                Log.d("TAG", "onCreate: =======> SUCCESS <============")
+//            }
+//        }
 
         chatGptService.getTextCompletion("Hello chat gpt! what is the meaning of life?") { result, error ->
             if (error != null) {
