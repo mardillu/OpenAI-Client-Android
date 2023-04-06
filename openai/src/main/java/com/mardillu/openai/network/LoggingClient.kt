@@ -48,9 +48,9 @@ class LoggingClient {
 
     fun logRequestTime(
         route: String,
-        request_time: Int,
-        response_time: Int,
-        duration: Int,
+        request_time: Long,
+        response_time: Long,
+        duration: Long,
         responseCode: Int,
         completionHandler: (Any?, Throwable?) -> Unit
     ) {
