@@ -7,4 +7,7 @@ data class LogApiRequest(
     val duration: Long,
     val response_code: Int,
     val method: String,
+    val accountName: String = "NA",
+    val userId: Long = 0L,
+    val exception: String = "",
 )

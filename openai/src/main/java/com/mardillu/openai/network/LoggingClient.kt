@@ -53,10 +53,21 @@ class LoggingClient {
         duration: Long,
         responseCode: Int,
         method: String,
+        accountName: String = "NA",
+        userId: Long = 0L,
+        exception: String = "",
         completionHandler: (Any?, Throwable?) -> Unit
     ) {
         val requestBody = LogApiRequest(
-            route, request_time, response_time, duration, responseCode, method,
+            route,
+            request_time,
+            response_time,
+            duration,
+            responseCode,
+            method,
+            accountName,
+            userId,
+            exception,
         )
         val call = apiService.logRequestTime(requestBody)
 
