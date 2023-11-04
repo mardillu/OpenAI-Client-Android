@@ -11,7 +11,9 @@ import com.mardillu.openai.test.databinding.ActivityMainBinding
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -83,7 +85,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        chatGptService.createImageEdit(imageFromAssets("img.png"), "A cute cat sitting on a white table", imageFromAssets("img.png")) { result, error ->
+        chatGptService.createImageEdit(
+            imageFromAssets("img.png"),
+            "A cute cat sitting on a white table",
+            imageFromAssets("img.png")
+        ) { result, error ->
             if (error != null) {
                 // Handle error
             } else if (result != null) {
@@ -121,7 +127,7 @@ class MainActivity : AppCompatActivity() {
     private fun imageFromAssets(name: String): File {
         val inputStream = applicationContext.assets.open(name)
         val suf = if (name.contains("m4a")) "suf.m4a" else "suf"
-        val file = File.createTempFile("pre",suf)
+        val file = File.createTempFile("pre", suf)
         file.outputStream().use { outputStream ->
             inputStream.copyTo(outputStream)
         }

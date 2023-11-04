@@ -8,7 +8,7 @@ import com.mardillu.openai.OpenAiInitializer
  *
  * @author mardillu
  */
-class App : Application(){
+class App : Application() {
     override fun onCreate() {
         super.onCreate()
         OpenAiInitializer.initialize(getString(R.string.OPEN_AI_API_KEY))
