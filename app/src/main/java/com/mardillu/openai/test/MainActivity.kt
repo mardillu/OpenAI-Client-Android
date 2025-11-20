@@ -9,6 +9,7 @@ import com.mardillu.openai.model.Message
 import com.mardillu.openai.network.OpenApiClient
 import com.mardillu.openai.test.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                 val result = chatGptService.getTextCompletion("Hello chat gpt! what is the meaning of life?")
                 binding.result1.text = result.choices[0].text
             } catch (e: Exception) {
-                Log.e("MainActivity", "Error in getTextCompletion", e)
+                Timber.tag("MainActivity").e(e, "Error in getTextCompletion")
             }
         }
 
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 val result = chatGptService.getChatCompletion(messages = listOf(Message("user", "What is the update with your weekly PR review")))
                 binding.result2.text = result.choices[0].message.content
             } catch (e: Exception) {
-                Log.e("MainActivity", "Error in getChatCompletion", e)
+                Timber.tag("MainActivity").e(e, "Error in getChatCompletion")
             }
         }
 
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 val result = chatGptService.getEditCompletion(input = "What day of the wek is it?", instruction = "Fix the spelling mistakes")
                 binding.result3.text = result.choices[0].text
             } catch (e: Exception) {
-                Log.e("MainActivity", "Error in getEditCompletion", e)
+                Timber.tag("MainActivity").e(e, "Error in getEditCompletion")
             }
         }
 
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 val result = chatGptService.getEmbeddings("Hello chat gpt! what is the meaning of life?")
                 binding.result4.text = result.data[0].embedding.size.toString()
             } catch (e: Exception) {
-                Log.e("MainActivity", "Error in getEmbeddings", e)
+                Timber.tag("MainActivity").e(e, "Error in getEmbeddings")
             }
         }
 
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 val result = chatGptService.createImage("A cute baby sea otter")
                 binding.result5.text = result.data[0].url
             } catch (e: Exception) {
-                Log.e("MainActivity", "Error in createImage", e)
+                Timber.tag("MainActivity").e(e, "Error in createImage")
             }
         }
 
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
                 val result = chatGptService.getModeration("I want to kill them.")
                 binding.result6.text = result.results[0].categories.hate.toString()
             } catch (e: Exception) {
-                Log.e("MainActivity", "Error in getModeration", e)
+                Timber.tag("MainActivity").e(e, "Error in getModeration")
             }
         }
 
@@ -87,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 )
                 binding.result7.text = result.data[0].url
             } catch (e: Exception) {
-                Log.e("MainActivity", "Error in createImageEdit", e)
+                Timber.tag("MainActivity").e(e, "Error in createImageEdit")
             }
         }
 
@@ -96,7 +97,7 @@ class MainActivity : AppCompatActivity() {
                 val result = chatGptService.createImageVariation(imageFromAssets("img.png"))
                 binding.result8.text = result.data[0].url
             } catch (e: Exception) {
-                Log.e("MainActivity", "Error in createImageVariation", e)
+                Timber.tag("MainActivity").e(e, "Error in createImageVariation")
             }
         }
 
@@ -105,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                 val result = chatGptService.createTranscription(imageFromAssets("audio.m4a"))
                 binding.result9.text = result.text
             } catch (e: Exception) {
-                Log.e("MainActivity", "Error in createTranscription", e)
+                Timber.tag("MainActivity").e(e, "Error in createTranscription")
             }
         }
 
@@ -114,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                 val result = chatGptService.createTranslation(imageFromAssets("audio.m4a"))
                 binding.result10.text = result.text
             } catch (e: Exception) {
-                Log.e("MainActivity", "Error in createTranslation", e)
+                Timber.tag("MainActivity").e(e, "Error in createTranslation")
             }
         }
     }
