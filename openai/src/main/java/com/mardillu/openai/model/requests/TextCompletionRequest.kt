@@ -4,6 +4,7 @@ package com.mardillu.openai.model
  * Created on 26/03/2023 at 12:35 PM
  * @author mardillu
  */
+@Deprecated("Use ChatCompletionRequest instead")
 data class TextCompletionRequest(
     val prompt: Array<out String>,
     val max_tokens: Int = 16,

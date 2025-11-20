@@ -1,5 +1,5 @@
 # OpenAI Client for Android
-A light weight OpenAI's API client for Android. This tool is specifically designed for Android developers to interact with OpenAI's API in a lightweight and efficient manner. With this client, Android developers will be able to access OpenAI's services seamlessly, without having to worry about heavy resource consumption or slow performance. This tool promises to be an invaluable asset for Android developers and users who require quick and easy access to OpenAI's API.
+A lightweight OpenAI API client for Android. This tool is specifically designed for Android developers to interact with OpenAI's API in a lightweight and efficient manner. With this client, Android developers will be able to access OpenAI's services seamlessly, without having to worry about heavy resource consumption or slow performance. This tool promises to be an invaluable asset for Android developers and users who require quick and easy access to OpenAI's API.
 
 [![Jitpack](https://jitpack.io/v/mardillu/OpenAI-Client-Android.svg)](https://jitpack.io/#mardillu/OpenAI-Client-Android)
 [![Build & Unit Test](https://github.com/mardillu/OpenAI-Client-Android/actions/workflows/build.yml/badge.svg)](https://github.com/mardillu/OpenAI-Client-Android/actions/workflows/build.yml)
@@ -47,10 +47,10 @@ client.getTextCompletion("Hello chat gpt! what is the meaning of life?") { resul
 }
 ```
 ## Supported APIs
-- [x] Completions
-- [x] Chat
-- [x] Edits
-- [x] Images
+- [x] Chat Completions (GPT-4, GPT-3.5)
+  - [x] Function Calling / Tools
+  - [x] JSON Mode
+- [x] Images (DALL-E 3, DALL-E 2)
   - Create
   - Edit
   - Variations
@@ -60,10 +60,17 @@ client.getTextCompletion("Hello chat gpt! what is the meaning of life?") { resul
 - [x] Audio
   - Transcribe
   - Translate
+- [x] Assistants (Beta)
+- [x] Threads (Beta)
+- [x] Runs (Beta)
+- [x] Messages (Beta)
+- [x] Files
+- [x] Fine-tuning
+- [x] Completions (Legacy)
+- [x] Edits (Legacy)
 
 ## Upcoming APIs
-- [ ] Fine-tunes
-- [ ] Files
+- [x] Streaming for Assistants
 
 ## License
 MIT License
