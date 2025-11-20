@@ -6,7 +6,6 @@ import com.mardillu.openai.model.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import retrofit2.Call
 import retrofit2.http.*
 
 /**
@@ -16,198 +15,198 @@ import retrofit2.http.*
 interface ChatGptApiService {
         @Deprecated("Use Chat Completions instead")
         @POST("completions")
-        fun getTextCompletion(@Body request: TextCompletionRequest): Call<TextCompletionResponse>
+        suspend fun getTextCompletion(@Body request: TextCompletionRequest): TextCompletionResponse
 
         @POST("chat/completions")
-        fun getChatCompletion(@Body request: ChatCompletionRequest): Call<ChatCompletionResponse>
+        suspend fun getChatCompletion(@Body request: ChatCompletionRequest): ChatCompletionResponse
 
         @Deprecated("Use Chat Completions instead")
         @POST("edits")
-        fun getEditCompletion(@Body request: EditCompletionRequest): Call<EditCompletionResponse>
+        suspend fun getEditCompletion(@Body request: EditCompletionRequest): EditCompletionResponse
 
         @POST("embeddings")
-        fun getEmbeddings(@Body request: CreateEmbeddingRequest): Call<CreateEmbeddingResponse>
+        suspend fun getEmbeddings(@Body request: CreateEmbeddingRequest): CreateEmbeddingResponse
 
         @POST("images/generations")
-        fun createImage(@Body request: CreateImageRequest): Call<CreateImageResponse>
+        suspend fun createImage(@Body request: CreateImageRequest): CreateImageResponse
 
         @POST("moderations")
-        fun getModeration(@Body request: ModerationRequest): Call<ModerationResponse>
+        suspend fun getModeration(@Body request: ModerationRequest): ModerationResponse
 
         @GET("models")
-        fun getModels(): Call<GetModelsResponse>
+        suspend fun getModels(): GetModelsResponse
 
         @Multipart
         @POST("images/edits")
-        fun createImageEdit(
+        suspend fun createImageEdit(
                 @Part image: MultipartBody.Part,
                 @Part mask: MultipartBody.Part,
                 @Part("prompt") prompt: RequestBody,
                 @Part("n") n: RequestBody,
                 @Part("size") size: RequestBody
-        ): Call<CreateImageResponse>
+        ): CreateImageResponse
 
         @Multipart
         @POST("images/edits")
-        fun createImageEdit(
+        suspend fun createImageEdit(
                 @Part image: MultipartBody.Part,
                 @Part("prompt") prompt: RequestBody,
                 @Part("n") n: RequestBody,
                 @Part("size") size: RequestBody
-        ): Call<CreateImageResponse>
+        ): CreateImageResponse
 
         @Multipart
         @POST("images/variations")
-        fun createImageVariation(
+        suspend fun createImageVariation(
                 @Part image: MultipartBody.Part,
                 @Part("n") n: RequestBody,
                 @Part("size") size: RequestBody
-        ): Call<CreateImageResponse>
+        ): CreateImageResponse
 
         @Multipart
         @POST("audio/transcriptions")
-        fun createTranscription(
+        suspend fun createTranscription(
                 @Part file: MultipartBody.Part,
                 @Part("model") model: RequestBody,
                 @Part("prompt") prompt: RequestBody? = null,
                 @Part("response_format") responseFormat: RequestBody? = null,
                 @Part("temperature") temperature: RequestBody? = null,
                 @Part("language") language: RequestBody? = null
-        ): Call<SimpleTextResponse>
+        ): SimpleTextResponse
 
         @Multipart
         @POST("audio/translations")
-        fun createTranslation(
+        suspend fun createTranslation(
                 @Part file: MultipartBody.Part,
                 @Part("model") model: RequestBody,
                 @Part("prompt") prompt: RequestBody? = null,
                 @Part("response_format") responseFormat: RequestBody? = null,
                 @Part("temperature") temperature: RequestBody? = null
-        ): Call<SimpleTextResponse>
+        ): SimpleTextResponse
 
         // Files
         @GET("files")
-        fun listFiles(): Call<ListFilesResponse>
+        suspend fun listFiles(): ListFilesResponse
 
         @Multipart
         @POST("files")
-        fun uploadFile(
+        suspend fun uploadFile(
                 @Part file: MultipartBody.Part,
                 @Part("purpose") purpose: RequestBody
-        ): Call<FileObject>
+        ): FileObject
 
         @DELETE("files/{file_id}")
-        fun deleteFile(@Path("file_id") fileId: String): Call<DeleteFileResponse>
+        suspend fun deleteFile(@Path("file_id") fileId: String): DeleteFileResponse
 
         @GET("files/{file_id}")
-        fun retrieveFile(@Path("file_id") fileId: String): Call<FileObject>
+        suspend fun retrieveFile(@Path("file_id") fileId: String): FileObject
 
         @GET("files/{file_id}/content")
-        fun retrieveFileContent(@Path("file_id") fileId: String): Call<ResponseBody>
+        suspend fun retrieveFileContent(@Path("file_id") fileId: String): ResponseBody
 
         // Fine-tuning
         @POST("fine_tuning/jobs")
-        fun createFineTuningJob(@Body request: CreateFineTuningJobRequest): Call<FineTuningJob>
+        suspend fun createFineTuningJob(@Body request: CreateFineTuningJobRequest): FineTuningJob
 
         @GET("fine_tuning/jobs")
-        fun listFineTuningJobs(
+        suspend fun listFineTuningJobs(
                 @Query("after") after: String? = null,
                 @Query("limit") limit: Int? = 20
-        ): Call<ListFineTuningJobsResponse>
+        ): ListFineTuningJobsResponse
 
         @GET("fine_tuning/jobs/{fine_tuning_job_id}")
-        fun retrieveFineTuningJob(@Path("fine_tuning_job_id") fineTuningJobId: String): Call<FineTuningJob>
+        suspend fun retrieveFineTuningJob(@Path("fine_tuning_job_id") fineTuningJobId: String): FineTuningJob
 
         @POST("fine_tuning/jobs/{fine_tuning_job_id}/cancel")
-        fun cancelFineTuningJob(@Path("fine_tuning_job_id") fineTuningJobId: String): Call<FineTuningJob>
+        suspend fun cancelFineTuningJob(@Path("fine_tuning_job_id") fineTuningJobId: String): FineTuningJob
 
         @GET("fine_tuning/jobs/{fine_tuning_job_id}/events")
-        fun listFineTuningEvents(
+        suspend fun listFineTuningEvents(
                 @Path("fine_tuning_job_id") fineTuningJobId: String,
                 @Query("after") after: String? = null,
                 @Query("limit") limit: Int? = 20
-        ): Call<ListFineTuningEventsResponse>
+        ): ListFineTuningEventsResponse
 
         // Assistants
         @Headers("OpenAI-Beta: assistants=v2")
         @POST("assistants")
-        fun createAssistant(@Body request: CreateAssistantRequest): Call<Assistant>
+        suspend fun createAssistant(@Body request: CreateAssistantRequest): Assistant
 
         @Headers("OpenAI-Beta: assistants=v2")
         @GET("assistants")
-        fun listAssistants(
+        suspend fun listAssistants(
                 @Query("after") after: String? = null,
                 @Query("limit") limit: Int? = 20
-        ): Call<ListAssistantsResponse>
+        ): ListAssistantsResponse
 
         @Headers("OpenAI-Beta: assistants=v2")
         @GET("assistants/{assistant_id}")
-        fun retrieveAssistant(@Path("assistant_id") assistantId: String): Call<Assistant>
+        suspend fun retrieveAssistant(@Path("assistant_id") assistantId: String): Assistant
 
         // Threads
         @Headers("OpenAI-Beta: assistants=v2")
         @POST("threads")
-        fun createThread(@Body request: CreateThreadRequest): Call<Thread>
+        suspend fun createThread(@Body request: CreateThreadRequest): Thread
 
         @Headers("OpenAI-Beta: assistants=v2")
         @GET("threads/{thread_id}")
-        fun retrieveThread(@Path("thread_id") threadId: String): Call<Thread>
+        suspend fun retrieveThread(@Path("thread_id") threadId: String): Thread
 
         @Headers("OpenAI-Beta: assistants=v2")
         @DELETE("threads/{thread_id}")
-        fun deleteThread(@Path("thread_id") threadId: String): Call<DeleteFileResponse> // Reusing DeleteFileResponse as structure is same
+        suspend fun deleteThread(@Path("thread_id") threadId: String): DeleteFileResponse // Reusing DeleteFileResponse as structure is same
 
         // Messages
         @Headers("OpenAI-Beta: assistants=v2")
         @POST("threads/{thread_id}/messages")
-        fun createMessage(
+        suspend fun createMessage(
                 @Path("thread_id") threadId: String,
                 @Body request: CreateMessageRequest
-        ): Call<ThreadMessage>
+        ): ThreadMessage
 
         @Headers("OpenAI-Beta: assistants=v2")
         @GET("threads/{thread_id}/messages")
-        fun listMessages(
+        suspend fun listMessages(
                 @Path("thread_id") threadId: String,
                 @Query("after") after: String? = null,
                 @Query("limit") limit: Int? = 20
-        ): Call<ListMessagesResponse>
+        ): ListMessagesResponse
 
         // Runs
         @Headers("OpenAI-Beta: assistants=v2")
         @POST("threads/{thread_id}/runs")
-        fun createRun(
+        suspend fun createRun(
                 @Path("thread_id") threadId: String,
                 @Body request: CreateRunRequest
-        ): Call<Run>
+        ): Run
 
         @Headers("OpenAI-Beta: assistants=v2")
         @POST("threads/{thread_id}/runs")
         @Streaming
-        fun createRunStream(
+        suspend fun createRunStream(
                 @Path("thread_id") threadId: String,
                 @Body request: CreateRunRequest
-        ): Call<ResponseBody>
+        ): ResponseBody
 
         @Headers("OpenAI-Beta: assistants=v2")
         @GET("threads/{thread_id}/runs")
-        fun listRuns(
+        suspend fun listRuns(
                 @Path("thread_id") threadId: String,
                 @Query("after") after: String? = null,
                 @Query("limit") limit: Int? = 20
-        ): Call<ListRunsResponse>
+        ): ListRunsResponse
 
         @Headers("OpenAI-Beta: assistants=v2")
         @GET("threads/{thread_id}/runs/{run_id}")
-        fun retrieveRun(
+        suspend fun retrieveRun(
                 @Path("thread_id") threadId: String,
                 @Path("run_id") runId: String
-        ): Call<Run>
+        ): Run
 
         @Headers("OpenAI-Beta: assistants=v2")
         @POST("threads/{thread_id}/runs/{run_id}/cancel")
-        fun cancelRun(
+        suspend fun cancelRun(
                 @Path("thread_id") threadId: String,
                 @Path("run_id") runId: String
-        ): Call<Run>
+        ): Run
 }

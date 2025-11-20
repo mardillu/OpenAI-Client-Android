@@ -3,11 +3,12 @@ package com.mardillu.openai.test
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.mardillu.openai.OpenAiConfig
 import com.mardillu.openai.model.Message
-import com.mardillu.openai.network.LoggingApiService
-import com.mardillu.openai.network.LoggingClient
 import com.mardillu.openai.network.OpenApiClient
 import com.mardillu.openai.test.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -19,109 +20,103 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val chatGptService = OpenApiClient()
-        val loggingApiService = LoggingClient()
+        // Initialize config (Replace with actual key or load from secure storage)
+        val config = OpenAiConfig(apiKey = "YOUR_API_KEY_HERE")
+        val chatGptService = OpenApiClient(config)
 
-//        loggingApiService.logRequestTime(
-//            "test/test",
-//            200,
-//            500,
-//            300,
-//            200,
-//        ){ result, error ->
-//            if (error != null){
-//                Log.d("TAG", "onCreate: =======> FAILED <============")
-//                error.printStackTrace()
-//            } else {
-//                Log.d("TAG", "onCreate: =======> SUCCESS <============")
-//            }
-//        }
-
-        chatGptService.getTextCompletion("Hello chat gpt! what is the meaning of life?") { result, error ->
-            if (error != null) {
-                // Handle error
-            } else if (result != null) {
+        lifecycleScope.launch {
+            try {
+                val result = chatGptService.getTextCompletion("Hello chat gpt! what is the meaning of life?")
                 binding.result1.text = result.choices[0].text
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error in getTextCompletion", e)
             }
         }
 
-        chatGptService.getChatCompletion(messages = listOf(Message("user", "What is the update with your weekly PR review"))) { result, error ->
-            if (error != null) {
-                // Handle error
-            } else if (result != null) {
+        lifecycleScope.launch {
+            try {
+                val result = chatGptService.getChatCompletion(messages = listOf(Message("user", "What is the update with your weekly PR review")))
                 binding.result2.text = result.choices[0].message.content
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error in getChatCompletion", e)
             }
         }
 
-        chatGptService.getEditCompletionAlt(input = "What day of the wek is it?", instruction = "Fix the spelling mistakes") { result, error ->
-            if (error != null) {
-                // Handle error
-            } else if (result != null) {
+        lifecycleScope.launch {
+            try {
+                val result = chatGptService.getEditCompletion(input = "What day of the wek is it?", instruction = "Fix the spelling mistakes")
                 binding.result3.text = result.choices[0].text
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error in getEditCompletion", e)
             }
         }
 
-        chatGptService.getEmbeddings("Hello chat gpt! what is the meaning of life?") { result, error ->
-            if (error != null) {
-                // Handle error
-            } else if (result != null) {
+        lifecycleScope.launch {
+            try {
+                val result = chatGptService.getEmbeddings("Hello chat gpt! what is the meaning of life?")
                 binding.result4.text = result.data[0].embedding.size.toString()
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error in getEmbeddings", e)
             }
         }
 
-        chatGptService.createImage("A cute baby sea otter") { result, error ->
-            if (error != null) {
-                // Handle error
-            } else if (result != null) {
+        lifecycleScope.launch {
+            try {
+                val result = chatGptService.createImage("A cute baby sea otter")
                 binding.result5.text = result.data[0].url
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error in createImage", e)
             }
         }
 
-        chatGptService.getModeration("I want to kill them.") { result, error ->
-            if (error != null) {
-                // Handle error
-            } else if (result != null) {
+        lifecycleScope.launch {
+            try {
+                val result = chatGptService.getModeration("I want to kill them.")
                 binding.result6.text = result.results[0].categories.hate.toString()
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error in getModeration", e)
             }
         }
 
-        chatGptService.createImageEdit(
-            imageFromAssets("img.png"),
-            "A cute cat sitting on a white table",
-            imageFromAssets("img.png")
-        ) { result, error ->
-            if (error != null) {
-                // Handle error
-            } else if (result != null) {
+        lifecycleScope.launch {
+            try {
+                val result = chatGptService.createImageEdit(
+                    imageFromAssets("img.png"),
+                    "A cute cat sitting on a white table",
+                    imageFromAssets("img.png")
+                )
                 binding.result7.text = result.data[0].url
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error in createImageEdit", e)
             }
         }
 
-        chatGptService.createImageVariation(imageFromAssets("img.png")) { result, error ->
-            if (error != null) {
-                // Handle error
-            } else if (result != null) {
+        lifecycleScope.launch {
+            try {
+                val result = chatGptService.createImageVariation(imageFromAssets("img.png"))
                 binding.result8.text = result.data[0].url
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error in createImageVariation", e)
             }
         }
 
-        chatGptService.createTranscription(imageFromAssets("audio.m4a")) { result, error ->
-            if (error != null) {
-                // Handle error
-            } else if (result != null) {
+        lifecycleScope.launch {
+            try {
+                val result = chatGptService.createTranscription(imageFromAssets("audio.m4a"))
                 binding.result9.text = result.text
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error in createTranscription", e)
             }
         }
 
-        chatGptService.createTranslation(imageFromAssets("audio.m4a")) { result, error ->
-            if (error != null) {
-                // Handle error
-            } else if (result != null) {
+        lifecycleScope.launch {
+            try {
+                val result = chatGptService.createTranslation(imageFromAssets("audio.m4a"))
                 binding.result10.text = result.text
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error in createTranslation", e)
             }
         }
-
-
     }
 
     private fun imageFromAssets(name: String): File {

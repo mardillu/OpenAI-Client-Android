@@ -1,7 +1,7 @@
 package com.mardillu.openai.network
 
 import com.mardillu.openai.BuildConfig
-import com.mardillu.openai.OpenAiInitializer
+
 import com.mardillu.openai.model.Message
 import com.mardillu.openai.model.TextCompletionRequest
 import com.mardillu.openai.model.requests.*

@@ -28,21 +28,20 @@ dependencies {
 ~~~
 
 ## Getting started
-1. Initialize the client by calling the following function. You only need to do this once, ideally, in your Application class using environment variables for the API_KEY.
-~~~kotlin
-OpenAiInitializer.initialize("API_KEY")
-~~~
-2. Create an instance of `OpenAiClient`
+1. Create an instance of `OpenAiConfig` and `OpenApiClient`:
 ```kotlin
-val client = OpenApiClient()
+val config = OpenAiConfig(apiKey = "YOUR_API_KEY")
+val client = OpenApiClient(config)
 ```
-3. Make a request
+2. Make a request using Coroutines:
 ```kotlin
-client.getTextCompletion("Hello chat gpt! what is the meaning of life?") { result, error ->
-    if (error != null) {
-        // Handle error
-    } else if (result != null) {
+lifecycleScope.launch {
+    try {
+        val result = client.getTextCompletion("Hello chat gpt! what is the meaning of life?")
         Log.d("TAG", result.choices[0].text)
+    } catch (e: Exception) {
+        // Handle error
+        e.printStackTrace()
     }
 }
 ```
@@ -68,8 +67,6 @@ client.getTextCompletion("Hello chat gpt! what is the meaning of life?") { resul
 - [x] Fine-tuning
 - [x] Completions (Legacy)
 - [x] Edits (Legacy)
-
-## Upcoming APIs
 - [x] Streaming for Assistants
 
 ## License
