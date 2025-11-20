@@ -138,7 +138,7 @@ class OpenApiClient(private val config: OpenAiConfig) {
      */
     suspend fun getModeration(
             input: String,
-            model: String = "text-moderation-latest"
+            model: String = "omni-moderation-latest"
     ): ModerationResponse {
         val requestBody = ModerationRequest(input, model)
         return service.getModeration(requestBody)

@@ -29,7 +29,7 @@ data class ResponseFormat(
 
 data class Tool(
     val type: String,
-    val function: FunctionDefinition
+    val function: FunctionDefinition? = null
 )
 
 data class FunctionDefinition(

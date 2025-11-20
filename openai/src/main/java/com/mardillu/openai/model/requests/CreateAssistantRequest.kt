@@ -9,5 +9,6 @@ data class CreateAssistantRequest(
     val instructions: String? = null,
     val tools: List<Tool>? = null,
     val file_ids: List<String>? = null,
-    val metadata: Map<String, String>? = null
+    val metadata: Map<String, String>? = null,
+    val tool_resources: ToolResources? = null
 )

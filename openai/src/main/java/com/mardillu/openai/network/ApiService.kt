@@ -14,14 +14,14 @@ import retrofit2.http.*
  */
 interface ChatGptApiService {
         @Deprecated("Use Chat Completions instead")
-        @POST("completions")
+        @POST("completions")//bnm
         suspend fun getTextCompletion(@Body request: TextCompletionRequest): TextCompletionResponse
 
         @POST("chat/completions")
         suspend fun getChatCompletion(@Body request: ChatCompletionRequest): ChatCompletionResponse
 
         @Deprecated("Use Chat Completions instead")
-        @POST("edits")
+        @POST("edits")//bnm
         suspend fun getEditCompletion(@Body request: EditCompletionRequest): EditCompletionResponse
 
         @POST("embeddings")

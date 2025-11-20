@@ -6,5 +6,6 @@ data class CreateRunRequest(
     val instructions: String? = null,
     val tools: List<Tool>? = null,
     val metadata: Map<String, String>? = null,
-    val stream: Boolean? = null
+    val stream: Boolean? = null,
+    val tool_resources: ToolResources? = null
 )
