@@ -69,6 +69,31 @@ lifecycleScope.launch {
 - [x] Edits (Legacy)
 - [x] Streaming for Assistants
 
+## Roadmap
+
+### Upcoming Features
+- [ ] **Streaming for Chat Completions** - Real-time token streaming for chat responses
+- [ ] **Batch API** - Support for asynchronous batch processing
+- [ ] **Vector Stores API** - Direct vector store management endpoints
+- [ ] **Uploads API** - Large file upload support
+- [ ] **Realtime API** - WebSocket-based real-time communication (GPT-4o Realtime)
+
+### Enhancements
+- [ ] **Response Caching** - Built-in caching mechanism for API responses
+- [ ] **Retry Logic** - Automatic retry with exponential backoff
+- [ ] **Rate Limiting** - Client-side rate limit handling
+- [ ] **Modularization** - Split client into focused modules (e.g., `client.chat`, `client.images`, `client.assistants`)
+- [ ] **Comprehensive Testing** - Unit and integration tests for all endpoints
+- [ ] **Sample App** - Full-featured demo application showcasing all capabilities
+
+### Documentation
+- [ ] **API Documentation** - KDoc documentation for all public APIs
+- [ ] **Usage Examples** - Comprehensive examples for each endpoint
+- [ ] **Migration Guide** - Detailed guide for upgrading from legacy versions
+
+Want to contribute? Check out our [issues](https://github.com/mardillu/OpenAI-Client-Android/issues) or submit a PR!
+
+
 ## License
 MIT License
 
